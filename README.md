@@ -35,7 +35,7 @@ This is a solution to the [Intro component with sign up form challenge on Fronte
 ### Links
 
 - Solution URL: (https://www.frontendmentor.io/challenges/intro-component-with-signup-form-5cf91bd49edda32581d28fd1/hub)
-- Live Site URL: (https://tip-calculator-app-main-pearl-eight.vercel.app/)
+- Live Site URL: (https://intro-component-with-signup-form-master-pi-ten.vercel.app/)
 
 ## My process
 
