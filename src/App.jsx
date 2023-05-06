@@ -1,21 +1,38 @@
 import { useForm, FormProvider } from "react-hook-form";
-import Input from "./Components/Input";
+import CustomInput from "./Components/CustomInput";
 
 const App = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
+  const methods = useForm({ mode: "all" });
   const onSubmit = (data) => {
     console.log(data);
   };
-  console.log(errors);
+  const inputNames = [
+    {
+      inputName: "First Name",
+      inputObjName: "firstName",
+      type: "text",
+    },
+    {
+      inputName: "Last Name",
+      inputObjName: "lastName",
+      type: "",
+    },
+    {
+      inputName: "Email Address",
+      inputObjName: "email",
+      type: "text",
+    },
+    {
+      inputName: "Password",
+      inputObjName: "password",
+      type: "password",
+    },
+  ];
   return (
     <div className="App">
-      <main className="text-center mx-6 mt-20">
-        <article className="text-neutralWhite">
-          <h2 className="text-[1.6rem] px-8 font-extrabold">
+      <main className="text-center mx-6 mt-20 lg:grid lg:grid-cols-2 lg:justify-center lg:items-center gap-6 lg:max-w-6xl ">
+        <article className="text-neutralWhite lg:text-left">
+          <h2 className="text-[1.6rem] px-8 lg:p-0 lg:text-5xl font-extrabold">
             Learn to code by watching others
           </h2>
           <p className="font-medium mt-5">
@@ -24,101 +41,40 @@ const App = () => {
             is invaluable.
           </p>
         </article>
-        <div className="bg-Blue rounded-lg text-neutralWhite py-4 px-12 mt-12 mb-6">
-          <span className="font-bold">Try it free 7 days </span>
-          then $20/mo. thereafter
-        </div>
 
         {/* Form section */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-neutralWhite rounded-lg p-6 grid gap-4 mb-14"
-        >
-          <div className="relative">
-            {errors.firstName ? (
-              <img
-                className="absolute right-4 top-4"
-                src={require("./images/icon-error.svg").default}
-                alt="error"
-              />
-            ) : (
-              ""
-            )}
-
-            <input
-              className="input"
-              {...register("firstName", {
-                required: {
-                  value: true,
-                  message: "First Name cannot be empty",
-                },
-              })}
-              type="text"
-              placeholder="First Name"
-            />
-            <p className="error-message">
-              {errors.firstName ? errors.firstName?.message : ""}
-            </p>
-          </div>
-
+        <FormProvider {...methods}>
           <div>
-            <input
-              className="input"
-              {...register("lastName", {
-                required: {
-                  value: true,
-                  message: "Last Name cannot be empty",
-                },
+            <div className="bg-Blue shadow-xl rounded-lg text-neutralWhite py-4 px-12 mt-12 mb-6">
+              <span className="font-bold">Try it free 7 days </span>
+              then $20/mo. thereafter
+            </div>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className="bg-neutralWhite rounded-lg p-6 grid gap-4 mb-14 shadow-xl"
+            >
+              {inputNames.map((data) => {
+                return (
+                  <CustomInput
+                    inputName={data.inputName}
+                    inputOjbName={data.inputObjName}
+                    type={data.type}
+                  />
+                );
               })}
-              type="text"
-              placeholder="Last Name"
-            />
-            <p className="error-message">
-              {errors.lastName ? errors.lastName?.message : ""}
-            </p>
+              <button className="shadow-xl uppercase text-neutralWhite bg-Green rounded-md py-4 font-medium">
+                Claim your free trial
+              </button>
+              <p className="text-xs text-neutralGrayishBlue px-6 leading-5  ">
+                By clicking the button, you are agreeing to our
+                <span className="text-Red font-semibold">
+                  {" "}
+                  Terms and Services
+                </span>
+              </p>
+            </form>
           </div>
-
-          <div>
-            <input
-              className="input"
-              {...register("email", {
-                required: {
-                  value: true,
-                  message: "Email cannot be empty",
-                },
-              })}
-              type="text"
-              placeholder="Email Address"
-            />
-            <p className="error-message">
-              {errors.email ? errors.email?.message : ""}
-            </p>
-          </div>
-
-          <div>
-            <input
-              className="input"
-              {...register("password", {
-                required: {
-                  value: true,
-                  message: "Password cannot be empty",
-                },
-              })}
-              type="text"
-              placeholder="Password"
-            />
-            <p className="error-message">
-              {errors.password ? errors.password?.message : ""}
-            </p>
-          </div>
-          <button className="uppercase text-neutralWhite bg-Green rounded-md py-4 font-medium">
-            Claim your free trial
-          </button>
-          <p className="text-xs text-neutralGrayishBlue px-6 leading-5  ">
-            By clicking the button, you are agreeing to our
-            <span className="text-Red font-semibold"> Terms and Services</span>
-          </p>
-        </form>
+        </FormProvider>
       </main>
     </div>
   );
